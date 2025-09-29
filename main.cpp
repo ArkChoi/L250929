@@ -15,6 +15,10 @@ w는 위로, s는 아래로, a는 왼쪽, d는 오른쪽 이런 프로그램을 만들어보세요.
 
 using namespace std;
 
+int PlayerMove(int* LocationX, int* LocationY);
+void EnemyMove(int* LocationX, int* LocationY);
+void PrintPoint(int LocationX, int LocationY, char Shape);
+
 int main() 
 {
 	srand((unsigned int)time(NULL));
@@ -26,68 +30,80 @@ int main()
 	int EnemyX = X_MAX;
 	int EnemyY = Y_MAX;
 	char EnemyShape = 'M';
-	int EnemyMove = 0;
 
 	bool GamePlay = true;
 
-	int KeyInput = 0;
-	COORD Cur{};
-
 	while (GamePlay)
 	{
-		//Player Controller
-		switch (KeyInput = _getch())
+		if(PlayerMove(&PlayerX, &PlayerY)==1)
 		{
-		case 'w':
-			PlayerY--;
-			break;
-		case 's':
-			PlayerY++;
-			break;
-		case 'a':
-			PlayerX--;
-			break;
-		case 'd':
-			PlayerX++;
-			break;
-		case 'q':
 			GamePlay = false;
-			break;
-		default:
-			break;
 		}
 
-		EnemyMove = (rand() % 4);
-		switch (EnemyMove)
-		{
-		case 0:
-			EnemyY--;
-			break;
-		case 1:
-			EnemyY++;
-			break;
-		case 2:
-			EnemyX--;
-			break;
-		case 3:
-			EnemyX++;
-			break;
-		default:
-			break;
-		}
+		EnemyMove(&EnemyX, &EnemyY);
 
 		system("cls");
 
-		COORD Cur;
-		Cur.X = PlayerX;
-		Cur.Y = PlayerY;
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
-		cout << PlayerShape << " ";
+		PrintPoint(PlayerX, PlayerY, PlayerShape);
 
-		Cur.X = EnemyX;
-		Cur.Y = EnemyY;
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
-		cout << EnemyShape << " ";
+		PrintPoint(EnemyX, EnemyY, EnemyShape);
 	}
 	return 0;
+}
+
+int PlayerMove(int* LocationX, int* LocationY) 
+{
+	int KeyInput = 0;
+	switch (KeyInput = _getch())
+	{
+	case 'w':
+		*LocationY = (*LocationY) - 1;
+		break;
+	case 's':
+		*LocationY = (*LocationY) + 1;
+		break;
+	case 'a':
+		*LocationX = (*LocationX) - 1;
+		break;
+	case 'd':
+		*LocationX = (*LocationX) + 1;
+		break;
+	case 'q':
+		return 1;
+		break;
+	default:
+		break;
+	}
+	return 0;
+}
+
+void EnemyMove(int* LocationX, int* LocationY)
+{
+	int EnemyMove = (rand() % 4);
+	switch (EnemyMove)
+	{
+	case 0:
+		*LocationY = (*LocationY) - 1;
+		break;
+	case 1:
+		*LocationY = (*LocationY) + 1;
+		break;
+	case 2:
+		*LocationX = (*LocationX) - 1;
+		break;
+	case 3:
+		*LocationX = (*LocationX) + 1;
+		break;
+	default:
+		break;
+	}
+}
+
+void PrintPoint(int LocationX, int LocationY, char Shape) 
+{
+	COORD Cur;
+	Cur.X = LocationX;
+	Cur.Y = LocationY;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
+	cout << Shape << " ";
 }

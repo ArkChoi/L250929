@@ -15,9 +15,16 @@ using namespace std;
 
 int main() 
 {
+	srand((unsigned int)time(NULL));
+
 	int PlayerX = 1;
 	int PlayerY = 1;
-	char PlayerPoint = '@';
+	char PlayerShape = 'P';
+
+	int EnemyX = X_MAX;
+	int EnemyY = Y_MAX;
+	char EnemyShape = '@';
+	int EnemyMove = 0;
 
 	bool GamePlay = true;
 
@@ -48,12 +55,37 @@ int main()
 			break;
 		}
 
+		EnemyMove = (rand() % 4);
+		switch (EnemyMove)
+		{
+		case 0:
+			EnemyY--;
+			break;
+		case 1:
+			EnemyY++;
+			break;
+		case 2:
+			EnemyX--;
+			break;
+		case 3:
+			EnemyX++;
+			break;
+		default:
+			break;
+		}
+
 		system("cls");
+
 		COORD Cur;
 		Cur.X = PlayerX;
 		Cur.Y = PlayerY;
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
-		cout << PlayerPoint << " ";
+		cout << PlayerShape << " ";
+
+		Cur.X = EnemyX;
+		Cur.Y = EnemyY;
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
+		cout << EnemyShape << " ";
 	}
 	return 0;
 }

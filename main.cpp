@@ -3,7 +3,9 @@
 wasd로 입력을 받아서 플레이어는 한칸씩 움직입니다.
 
 w는 위로, s는 아래로, a는 왼쪽, d는 오른쪽 이런 프로그램을 만들어보세요.
-플레이어 모양은 P로 출력 해주세요.*/
+플레이어 모양은 P로 출력 해주세요.
+
+몬스터도 한마리 출현 시켜주세요.*/
 
 #include <iostream>
 #include <windows.h>
@@ -23,7 +25,7 @@ int main()
 
 	int EnemyX = X_MAX;
 	int EnemyY = Y_MAX;
-	char EnemyShape = '@';
+	char EnemyShape = 'M';
 	int EnemyMove = 0;
 
 	bool GamePlay = true;
